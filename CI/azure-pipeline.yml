@@ -1,0 +1,28 @@
+trigger:
+  - trunk
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  containerregistry: 'ContainerRegistryElvia'
+  imagetag: $(Build.BuildNumber)
+  name: azuredevopsagentelvia
+  namespace: core
+
+stages:
+- stage: BuildDev
+  variables: 
+  - group: sp-terraform-core-dev
+  jobs:
+  - job:
+    steps:
+      - script: packer build images/linux/ubuntu2004.json
+        env: 
+          ARM_CLIENT_ID: 335dcfa5-41af-4223-a230-c4db82eae4c5 # sp-terraform-core-dev
+          ARM_CLIENT_SECRET: $(client_secret)
+          ARM_SUBSCRIPTION_ID: 93c9a48f-6fc4-46b4-b1b9-10b6cc422f76 # core-devtest
+          ARM_TENANT_ID: 2186a6ec-c227-4291-9806-d95340bf439d
+          ARM_RESOURCE_GROUP: CORE-RGdev
+          ARM_STORAGE_ACCOUNT: elviacoredev
+          ARM_RESOURCE_LOCATION: westeurope
