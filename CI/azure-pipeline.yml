@@ -4,12 +4,6 @@ trigger:
 pool:
   vmImage: "ubuntu-latest"
 
-variables:
-  containerregistry: 'ContainerRegistryElvia'
-  imagetag: $(Build.BuildNumber)
-  name: azuredevopsagentelvia
-  namespace: core
-
 stages:
 - stage: BuildDev
   variables: 
