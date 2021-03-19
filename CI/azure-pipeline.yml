@@ -14,21 +14,25 @@ stages:
   - job:
     timeoutInMinutes: 360
     steps:
-      # - script: |
-      #     git config --global user.email "azuredevops@elvia.io"
-      #     git config --global user.name "elvia-core"
-      #     git remote add upstream https://github.com/actions/virtual-environments
-      #     git fetch upstream
-      #     git merge upstream/main
-      #     git push origin main
-      #   displayName: Update repo from upstream
-      - script: packer build images/linux/ubuntu2004.json
-        displayName: Packer build
-        env: 
-          ARM_CLIENT_ID: 526cb446-977d-4db5-b110-40dc065ff64b # sp-terraform-core-prod
-          ARM_CLIENT_SECRET: $(client_secret)
-          ARM_SUBSCRIPTION_ID: 6cd117f2-adb1-452e-a60e-86131c1f11d4 # core
-          ARM_TENANT_ID: 2186a6ec-c227-4291-9806-d95340bf439d
-          ARM_RESOURCE_GROUP: CORE-RGprod
-          ARM_STORAGE_ACCOUNT: elviacoreprod
-          ARM_RESOURCE_LOCATION: westeurope
+        - checkout: self
+          fetchDepth: 1
+          submodules: false
+          persistCredentials: true
+      - script: |
+          git config --global user.email "azuredevops@elvia.io"
+          git config --global user.name "elvia-core"
+          git remote add upstream https://github.com/actions/virtual-environments
+          git fetch upstream
+          git merge upstream/main
+          git push origin main
+        displayName: Update repo from upstream
+      # - script: packer build images/linux/ubuntu2004.json
+      #   displayName: Packer build
+      #   env: 
+      #     ARM_CLIENT_ID: 526cb446-977d-4db5-b110-40dc065ff64b # sp-terraform-core-prod
+      #     ARM_CLIENT_SECRET: $(client_secret)
+      #     ARM_SUBSCRIPTION_ID: 6cd117f2-adb1-452e-a60e-86131c1f11d4 # core
+      #     ARM_TENANT_ID: 2186a6ec-c227-4291-9806-d95340bf439d
+      #     ARM_RESOURCE_GROUP: CORE-RGprod
+      #     ARM_STORAGE_ACCOUNT: elviacoreprod
+      #     ARM_RESOURCE_LOCATION: westeurope
