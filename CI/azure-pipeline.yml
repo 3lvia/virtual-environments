@@ -23,6 +23,7 @@ stages:
           git config --global user.name "elvia-core"
           git remote add upstream https://github.com/actions/virtual-environments
           git fetch upstream
+          git checkout main
           git merge upstream/main
           git push origin main
         displayName: Update repo from upstream
