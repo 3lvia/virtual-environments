@@ -1,5 +1,5 @@
 trigger:
-  - trunk
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -12,6 +12,7 @@ stages:
   - job:
     steps:
       - script: packer build images/linux/ubuntu2004.json
+        displayName: Packer build
         env: 
           ARM_CLIENT_ID: 335dcfa5-41af-4223-a230-c4db82eae4c5 # sp-terraform-core-dev
           ARM_CLIENT_SECRET: $(client_secret)
