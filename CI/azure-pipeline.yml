@@ -4,19 +4,26 @@ trigger:
 pool: elvia-hosted-agent-dev
 
 stages:
-- stage: BuildDev
+- stage: BuildProd
   variables: 
-  - group: sp-terraform-core-dev
+  - group: sp-terraform-core-prod
   jobs:
   - job:
     steps:
+      - script: |
+          git remote add upstream https://github.com/actions/virtual-environments
+          git fetch upstream
+          git checkout main
+          git merge upstream/main
+          git push
+        displayName: Update repo from upstream
       - script: packer build images/linux/ubuntu2004.json
         displayName: Packer build
         env: 
-          ARM_CLIENT_ID: 335dcfa5-41af-4223-a230-c4db82eae4c5 # sp-terraform-core-dev
+          ARM_CLIENT_ID: 526cb446-977d-4db5-b110-40dc065ff64b # sp-terraform-core-prod
           ARM_CLIENT_SECRET: $(client_secret)
-          ARM_SUBSCRIPTION_ID: 93c9a48f-6fc4-46b4-b1b9-10b6cc422f76 # core-devtest
+          ARM_SUBSCRIPTION_ID: 6cd117f2-adb1-452e-a60e-86131c1f11d4 # core
           ARM_TENANT_ID: 2186a6ec-c227-4291-9806-d95340bf439d
-          ARM_RESOURCE_GROUP: CORE-RGdev
-          ARM_STORAGE_ACCOUNT: elviacoredev
+          ARM_RESOURCE_GROUP: CORE-RGprod
+          ARM_STORAGE_ACCOUNT: elviacoreprod
           ARM_RESOURCE_LOCATION: westeurope
