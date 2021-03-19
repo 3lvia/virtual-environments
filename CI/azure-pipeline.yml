@@ -10,14 +10,14 @@ stages:
   jobs:
   - job:
     steps:
-      - script: |
-          git config --global user.email "azuredevops@elvia.io"
-          git config --global user.name "elvia-core"
-          git remote add upstream https://github.com/actions/virtual-environments
-          git fetch upstream
-          git merge upstream/main
-          git push origin main
-        displayName: Update repo from upstream
+      # - script: |
+      #     git config --global user.email "azuredevops@elvia.io"
+      #     git config --global user.name "elvia-core"
+      #     git remote add upstream https://github.com/actions/virtual-environments
+      #     git fetch upstream
+      #     git merge upstream/main
+      #     git push origin main
+      #   displayName: Update repo from upstream
       - script: packer build images/linux/ubuntu2004.json
         displayName: Packer build
         env: 
